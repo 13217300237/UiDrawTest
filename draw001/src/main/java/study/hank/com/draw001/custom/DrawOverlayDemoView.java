@@ -141,7 +141,7 @@ public class DrawOverlayDemoView extends View {
 
         int width = getWidth();
         int height = getHeight();
-        canvas.translate(width / 2, height / 2);
+        canvas.translate(width / 2, height / 2);//为了作图方便，我们通常先把坐标轴原点移动到 绘制区域的正中央
         curXOffset = waveProcess * mHeartRect.width();//当前X轴方向上 波浪偏移量
 
         canvas.clipPath(mMainPath);
