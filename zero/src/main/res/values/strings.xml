@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">zero</string>
+    <string name="circle">圆</string>
+    <string name="rect">矩形</string>
+    <string name="square">？</string>
+    <string name="round_rect">圆角矩形</string>
+    <string name="oval">椭圆</string>
+    <string name="triangle">三角形</string>
+    <string name="pentagon">五角行</string>
+</resources>
