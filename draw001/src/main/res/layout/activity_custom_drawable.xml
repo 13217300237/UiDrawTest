@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorC"
+    android:padding="10dp"
     tools:context=".activity.CustomDrawableActivity">
 
     <ImageView
@@ -13,6 +15,82 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/aoyun_green" />
+
+    <Button
+        android:id="@+id/speed_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/bg_round"
+        android:text="加速"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/speed_down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/bg_round"
+        android:text="减速"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/speed_up" />
+
+    <Button
+        android:id="@+id/show_support_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/bg_round"
+        android:text="辅助线"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/speed_down" />
+
+    <TextView
+        android:id="@+id/tv_support_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="显示辅助线"
+        android:textColor="@color/aoyun_red"
+        app:layout_constraintBottom_toTopOf="@id/show_support_line"
+        app:layout_constraintLeft_toLeftOf="@id/show_support_line"
+        app:layout_constraintRight_toRightOf="@id/show_support_line" />
+
+    <Button
+        android:id="@+id/start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/bg_round2"
+        android:text="开始"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/tt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="10dp"
+        android:text="当前速率:"
+        android:textColor="@color/aoyun_black"
+        app:layout_constraintBottom_toTopOf="@id/speed_up"
+        app:layout_constraintEnd_toEndOf="@+id/speed_up"
+        app:layout_constraintLeft_toLeftOf="@id/speed_up" />
+
+    <TextView
+        android:id="@+id/current_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="1.0"
+        android:textColor="@color/aoyun_red"
+        app:layout_constraintBottom_toTopOf="@id/speed_up"
+        app:layout_constraintLeft_toLeftOf="@id/speed_down"
+        app:layout_constraintRight_toRightOf="@id/speed_down" />
+
 
 </android.support.constraint.ConstraintLayout>

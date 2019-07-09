@@ -2,6 +2,7 @@ package study.hank.com.draw001.custom;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -14,7 +15,6 @@ import android.graphics.SweepGradient;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
@@ -27,19 +27,44 @@ import study.hank.com.draw001.Utils;
  */
 public class MemoryClearDrawable extends Drawable {
 
-    private Paint mPaint;
-    private Paint mSupportPaint, mSupportPaint2;
-    private Paint mArcPaint, mCrossPaint, mTickPaint, mPointPaint;
-    private int mWidth;
-    private int mHeight;
+    private Paint mPaint, mSupportPaint, mSupportPaint2, mArcPaint, mCrossPaint, mTickPaint, mPointPaint;
+    private int mWidth, mHeight, radius;//宽 高 圆半径
     private Context mContext;
-    private int radius;
 
+    private float upMovingLength;// 原点上移的最大距离
+    private float degreeOffset = 0;// 角度偏移量，影响外圈的起始角度
+
+    private float crossAnimatorFactor = 1;//叉叉动画系数,影响叉叉长度
+    private float pointMoveFactor = 0;//圆点上移距离 系数
+    private float pointFactor = 0.45f;// 圆点的最大上下移系数
+    private float tickFactor = 0;// 勾勾的长度系数，影响勾勾长度
+
+    private boolean showSupportLine = false;//是否显示辅助线
+    private float animatorTotalSpeedFactor = 1f;//动画执行的整体速度系数 1f表示1倍速度，
+
+    /**
+     * 是否显示辅助线
+     *
+     * @param showSupportLine
+     */
+    public void setShowSupportLine(boolean showSupportLine) {
+        this.showSupportLine = showSupportLine;
+        invalidateSelf();
+    }
+
+    /**
+     * 设置动画的执行速率
+     *
+     * @param animatorTotalSpeedFactor
+     */
+    public void setAnimatorTotalSpeedFactor(float animatorTotalSpeedFactor) {
+        this.animatorTotalSpeedFactor = animatorTotalSpeedFactor;
+        initAnimators();
+    }
 
     private final double arcPerDegree = 180 / Math.PI;//把角度换算成弧度,每度等于多少弧度
 
     public MemoryClearDrawable(Context context, int mWidth, int mHeight) {
-        super();
         this.mContext = context;
         this.mWidth = mWidth;
         this.mHeight = mHeight;
@@ -52,7 +77,7 @@ public class MemoryClearDrawable extends Drawable {
         mPaint.setColor(mContext.getResources().getColor(R.color.aoyun_green));
         mPaint.setStyle(Paint.Style.FILL);
 
-        //画虚线，在23设备上虚线不生效，我擦？！
+        //画虚线，在23设备上虚线不生效，!?!?!?
         mSupportPaint = new Paint();
         mSupportPaint.setAntiAlias(true);
         mSupportPaint.setColor(mContext.getResources().getColor(R.color.aoyun_black));
@@ -93,6 +118,18 @@ public class MemoryClearDrawable extends Drawable {
         mPointPaint.setStyle(Paint.Style.FILL);
         mPointPaint.setColor(getColor(R.color.colorF));
         mPointPaint.setAntiAlias(true);
+
+        radius = Math.min(mWidth, mHeight) / 3;//确定圆圈的半径
+
+        initAnimators();
+    }
+
+    private void initAnimators() {
+        initCleaningAnimator();
+        initCrossAnimator();
+        initPointUpAnimator();
+        intPointDownAnimator();
+        initTickingAnimator();
     }
 
     private int getColor(int resId) {
@@ -100,8 +137,8 @@ public class MemoryClearDrawable extends Drawable {
     }
 
     private void drawSupportLines(Canvas canvas) {
-        //坐标移动到中央
-        //2 纵横辅助线
+        if (!showSupportLine) return;
+
         canvas.drawLine(
                 -mWidth / 2,
                 0,
@@ -118,15 +155,12 @@ public class MemoryClearDrawable extends Drawable {
     }
 
     private void drawBg(Canvas canvas) {
-        //不行，我的背景要换成方形的
         int sideLength = Math.min(mWidth, mHeight);//方形边长
-        //此时，坐标轴已经移动到了中心
         RectF rectF = new RectF(-sideLength / 2, -sideLength / 2, sideLength / 2, sideLength / 2);
         canvas.drawRoundRect(rectF, Utils.dp2px(10), Utils.dp2px(10), mPaint);//中间两个参数决定x y方向上的圆角角度值
     }
 
     private void drawArc(Canvas canvas) {
-        radius = Math.min(mWidth, mHeight) / 3;//确定圆圈的半径
         RectF rectF = new RectF(-radius, -radius, radius, radius);
         canvas.rotate(-90 - degreeOffset);
         canvas.drawArc(rectF, 0, 300, false, mArcPaint);
@@ -164,7 +198,7 @@ public class MemoryClearDrawable extends Drawable {
     }
 
     private void drawPoint(Canvas canvas) {
-        canvas.drawCircle(0, 0 - pointUpFactor * upMovingLength, Utils.dp2px(5), mPointPaint);
+        canvas.drawCircle(0, 0 - pointMoveFactor * upMovingLength, Utils.dp2px(5), mPointPaint);
     }
 
     public int mState = 0;//当前状态
@@ -180,9 +214,9 @@ public class MemoryClearDrawable extends Drawable {
 
     @Override
     public void draw(@NonNull Canvas canvas) {
-        canvas.translate(mWidth / 2, mHeight / 2);
-        drawBg(canvas);
-        drawSupportLines(canvas);
+        canvas.translate(mWidth / 2, mHeight / 2);//第一件事，先把坐标轴移动到中央，为了绘制方便
+        drawBg(canvas);// 画背景
+        drawSupportLines(canvas);//画辅助线
         canvas.save();
 
         switch (mState) {
@@ -227,134 +261,112 @@ public class MemoryClearDrawable extends Drawable {
         }
     }
 
-    private float degreeOffset = 0;
-
+    private AnimatorSet animatorSet;
+    private ValueAnimator cleaningAnimator, crossingAnimator, pointUpAnimator, pointDownAnimator, tickingAnimator;
 
     /**
      * 清除中 动画
      */
-    private void startCleaningAnimator() {
-        mState = States.STATE_CLEANING;
-        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
-        valueAnimator.setDuration(200);
-        valueAnimator.setRepeatMode(ValueAnimator.RESTART);
-        valueAnimator.setRepeatCount(3);
-        valueAnimator.setInterpolator(new LinearInterpolator());
-        valueAnimator.addUpdateListener(animation -> {
+    private void initCleaningAnimator() {
+        cleaningAnimator = ValueAnimator.ofFloat(0, 1);
+        cleaningAnimator.setDuration((long) (200 / animatorTotalSpeedFactor));
+        cleaningAnimator.setRepeatMode(ValueAnimator.RESTART);
+        cleaningAnimator.setRepeatCount(3);
+        cleaningAnimator.setInterpolator(new LinearInterpolator());
+        cleaningAnimator.addUpdateListener(animation -> {
             float a = (float) animation.getAnimatedValue();
             degreeOffset = 360 * a;
             invalidateSelf();
         });
-        valueAnimator.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {// 当它执行完毕，状态值+1，然后启动下一个动画
-                startCrossAnimator();
-            }
-
+        cleaningAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
-                super.onAnimationStart(animation);
-                running = true;
+                mState = States.STATE_CLEANING;
             }
         });
-        valueAnimator.start();
     }
 
-    private float crossAnimatorFactor = 1;//叉叉动画系数,影响叉叉长度
-
-    private void startCrossAnimator() {
-        mState = States.STATE_CROSSING;
-        ValueAnimator valueAnimator = ValueAnimator.ofFloat(1, 0);
-        valueAnimator.setDuration(500);
-        valueAnimator.setInterpolator(new LinearInterpolator());
-        valueAnimator.addUpdateListener(animation -> {
+    private void initCrossAnimator() {
+        crossingAnimator = ValueAnimator.ofFloat(1, 0);
+        crossingAnimator.setDuration((long) (500 / animatorTotalSpeedFactor));
+        crossingAnimator.setInterpolator(new LinearInterpolator());
+        crossingAnimator.addUpdateListener(animation -> {
             float a = (float) animation.getAnimatedValue();
             crossAnimatorFactor = a;
             invalidateSelf();
         });
-        valueAnimator.addListener(new AnimatorListenerAdapter() {
+        crossingAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
-            public void onAnimationEnd(Animator animation) {// 当它执行完毕，状态值+1，然后启动下一个动画
-                startPointUp();
+            public void onAnimationStart(Animator animation) {// 当它执行完毕，状态值+1，然后启动下一个动画
+                mState = States.STATE_CROSSING;
             }
         });
-        valueAnimator.start();
     }
 
-    private float pointUpFactor = 0;//圆点上移，从圆点向上
-    private float upMovingLength;
-
-    private float pointFactor = 0.45f;
-
-    private void startPointUp() {
-        mState = States.STATE_POINT_UP;
+    private void initPointUpAnimator() {
         upMovingLength = radius * pointFactor;
-        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
-        valueAnimator.setDuration(500);
-        valueAnimator.setInterpolator(new DecelerateInterpolator());
-        valueAnimator.addUpdateListener(animation -> {
+        pointUpAnimator = ValueAnimator.ofFloat(0, 1);
+        pointUpAnimator.setDuration((long) (500 / animatorTotalSpeedFactor));
+        pointUpAnimator.setInterpolator(new DecelerateInterpolator());
+        pointUpAnimator.addUpdateListener(animation -> {
             float a = (float) animation.getAnimatedValue();
-            pointUpFactor = a;
+            pointMoveFactor = a;
             invalidateSelf();
         });
-        valueAnimator.addListener(new AnimatorListenerAdapter() {
+        pointUpAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
-            public void onAnimationEnd(Animator animation) {// 当它执行完毕，状态值+1，然后启动下一个动画
-                startPointDown();
+            public void onAnimationStart(Animator animation) {// 当它执行完毕，状态值+1，然后启动下一个动画
+                mState = States.STATE_POINT_UP;
             }
         });
-        valueAnimator.start();
     }
 
-    private void startPointDown() {
-        mState = States.STATE_POINT_DOWN;
-        ValueAnimator valueAnimator = ValueAnimator.ofFloat(1, -1);
-        valueAnimator.setDuration(500);
-        valueAnimator.setInterpolator(new AccelerateInterpolator());
-        valueAnimator.addUpdateListener(animation -> {
+    private void intPointDownAnimator() {
+        pointDownAnimator = ValueAnimator.ofFloat(1, -1);
+        pointDownAnimator.setDuration((long) (500 / animatorTotalSpeedFactor));
+        pointDownAnimator.setInterpolator(new AccelerateInterpolator());
+        pointDownAnimator.addUpdateListener(animation -> {
             float a = (float) animation.getAnimatedValue();
-            pointUpFactor = a;
+            pointMoveFactor = a;
             invalidateSelf();
         });
-        valueAnimator.addListener(new AnimatorListenerAdapter() {
+        pointDownAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {// 当它执行完毕，状态值+1，然后启动下一个动画
-                startTicking();
+                mState = States.STATE_POINT_DOWN;
             }
         });
-        valueAnimator.start();
     }
-
-    private float tickFactor = 0;
 
     //最后的勾勾伸展
-    private void startTicking() {
-        mState = States.STATE_TICKING;
-        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
-        valueAnimator.setDuration(500);
-        valueAnimator.setInterpolator(new AccelerateInterpolator());
-        valueAnimator.addUpdateListener(animation -> {
+    private void initTickingAnimator() {
+        tickingAnimator = ValueAnimator.ofFloat(0, 1);
+        tickingAnimator.setDuration((long) (500 / animatorTotalSpeedFactor));
+        tickingAnimator.setInterpolator(new AccelerateInterpolator());
+        tickingAnimator.addUpdateListener(animation -> {
             float a = (float) animation.getAnimatedValue();
             tickFactor = a;
             invalidateSelf();
         });
-        valueAnimator.addListener(new AnimatorListenerAdapter() {
+        tickingAnimator.addListener(new AnimatorListenerAdapter() {
+
             @Override
-            public void onAnimationEnd(Animator animation) {// 当它执行完毕，状态值+1，然后启动下一个动画
-                running = false;
+            public void onAnimationStart(Animator animation) {
+                mState = States.STATE_TICKING;
             }
         });
-        valueAnimator.start();
     }
 
-    private boolean running = false;
 
     public void startAnimator() {
         crossAnimatorFactor = 1;
-        if (!running)
-            startCleaningAnimator();
-        else
-            Log.d("startAnimatorTag", "动画进行中，请稍后");
+        if (null != animatorSet) {
+            animatorSet.cancel();
+            animatorSet = null;
+        }
+        animatorSet = new AnimatorSet();
+        animatorSet.playSequentially(cleaningAnimator, crossingAnimator, pointUpAnimator, pointDownAnimator, tickingAnimator);//次序执行
+        animatorSet.start();
     }
 
     @Override
