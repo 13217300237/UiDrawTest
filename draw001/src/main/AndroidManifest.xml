@@ -10,8 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
-            android:name=".activity.OverlayDrawActivity"
+            android:name=".activity.CustomDrawableActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.OverlayDrawActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MatrixActivity"
             android:screenOrientation="portrait" />
@@ -19,11 +22,13 @@
             android:name=".activity.RoundImageViewActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.ScrollViewInnerCustomViewActivity" />
-        <activity android:name=".activity.ShaderActivity" />
+        <activity
+            android:name=".activity.ShaderActivity"
+            android:screenOrientation="landscape" />
         <activity android:name=".activity.DrawTextActivity" />
         <activity android:name=".activity.OlympicRingsActivity" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.nav.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

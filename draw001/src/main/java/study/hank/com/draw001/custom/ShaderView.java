@@ -42,7 +42,7 @@ public class ShaderView extends View {
             mPaint = new Paint();
         mPaint.reset();
         mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setColor(getResources().getColor(R.color.aoyun_4));
+        mPaint.setColor(getResources().getColor(R.color.aoyun_green));
         mPaint.setAntiAlias(true);
         mPaint.setStrokeWidth(Utils.dp2px(10));
     }
@@ -59,34 +59,37 @@ public class ShaderView extends View {
 
         canvas.translate(100, 100);
 
-        drawLine(canvas);
-        drawGradientCircle(canvas);
+//        drawLine(canvas);
+//        drawGradientCircle(canvas);
         drawGradientArc(canvas);
-
-        //可是如果要画一个 环形渐变呢？
-        canvas.restore();
-        canvas.restore();
-        canvas.restore();
-
-        Matrix matrix = new Matrix();
-        canvas.setMatrix(matrix);
-
-        canvas.translate(-Utils.dp2px(100), Utils.dp2px(150));
-
-        RadialGradient radialGradient = new RadialGradient(
-                centerX, centerY, radius,
-                Color.BLACK, Color.WHITE
-                , Shader.TileMode.CLAMP);
-
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setShader(radialGradient);
-        canvas.drawCircle(centerX, centerY, radius, mPaint);
+//
+//        //可是如果要画一个 环形渐变呢？
+//        canvas.restore();
+//        canvas.restore();
+//        canvas.restore();
+//
+//        Matrix matrix = new Matrix();
+//        canvas.setMatrix(matrix);
+//
+//        canvas.translate(-Utils.dp2px(100), Utils.dp2px(150));
+//
+//        RadialGradient radialGradient = new RadialGradient(
+//                centerX, centerY, radius,
+//                Color.BLACK, Color.WHITE
+//                , Shader.TileMode.CLAMP);
+//
+//        mPaint.setStyle(Paint.Style.STROKE);
+//        mPaint.setShader(radialGradient);
+//        canvas.drawCircle(centerX, centerY, radius, mPaint);
 
 
     }
 
     private void drawGradientArc(Canvas canvas) {
         canvas.translate(Utils.dp2px(200), 0);
+        int[] SWEEP_GRADIENT_COLORS = new int[]{Color.BLACK, Color.WHITE};
+        SweepGradient mColorShader = new SweepGradient(centerX, centerY, SWEEP_GRADIENT_COLORS, null);
+        mPaint.setShader(mColorShader);
 
         RectF rectF = new RectF(
                 centerX - radius,
@@ -94,7 +97,7 @@ public class ShaderView extends View {
                 centerX + radius,
                 centerY + radius);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        canvas.drawArc(rectF, 0, 300, false, mPaint);
+        canvas.drawArc(rectF, 0, 270, false, mPaint);
         canvas.save();
     }
 

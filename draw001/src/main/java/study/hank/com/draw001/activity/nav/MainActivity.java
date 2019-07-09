@@ -1,10 +1,18 @@
-package study.hank.com.draw001.activity;
+package study.hank.com.draw001.activity.nav;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import study.hank.com.draw001.R;
+import study.hank.com.draw001.activity.CustomDrawableActivity;
+import study.hank.com.draw001.activity.DrawTextActivity;
+import study.hank.com.draw001.activity.MatrixActivity;
+import study.hank.com.draw001.activity.OlympicRingsActivity;
+import study.hank.com.draw001.activity.OverlayDrawActivity;
+import study.hank.com.draw001.activity.RoundImageViewActivity;
+import study.hank.com.draw001.activity.ScrollViewInnerCustomViewActivity;
+import study.hank.com.draw001.activity.ShaderActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,6 +52,12 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.btn7).setOnClickListener(v -> {
             Intent i = new Intent(MainActivity.this, OverlayDrawActivity.class);
+            startActivity(i);
+
+        });
+
+        findViewById(R.id.btn8).setOnClickListener(v -> {
+            Intent i = new Intent(MainActivity.this, CustomDrawableActivity.class);
             startActivity(i);
         });
     }

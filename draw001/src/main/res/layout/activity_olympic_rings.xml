@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:orientation="horizontal"
-    tools:context=".activity.MainActivity">
+    tools:context=".activity.nav.MainActivity">
 
     <study.hank.com.draw001.custom.OlympicRingsView
         android:layout_width="100dp"

@@ -4,12 +4,13 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="aoyun_1">#0193DE</color>
-    <color name="aoyun_2">#E67817</color>
-    <color name="aoyun_3">#201A1A</color>
-    <color name="aoyun_4">#019342</color>
-    <color name="aoyun_5">#DC251F</color>
+    <color name="aoyun_blue">#0193DE</color>
+    <color name="aoyun_orange">#E67817</color>
+    <color name="aoyun_black">#201A1A</color>
+    <color name="aoyun_green">#019342</color>
+    <color name="aoyun_red">#DC251F</color>
 
-    <color name="colorF">#FFFFFF</color>
+    <color name="colorF">#FFFFFFFF</color>
+    <color name="colorF0">#00FFFFFF</color>
     <color name="colorC">#CCCCCC</color>
 </resources>

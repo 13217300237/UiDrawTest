@@ -121,32 +121,32 @@ public class OlympicRingsView extends View {
         paintHelper.setStrokeWidth(Utils.dp2px(1));
 
         paintBlue = new Paint();
-        paintBlue.setColor(getResources().getColor(R.color.aoyun_1));
+        paintBlue.setColor(getResources().getColor(R.color.aoyun_blue));
         paintBlue.setAntiAlias(true);
         paintBlue.setStyle(Paint.Style.STROKE);
         paintBlue.setStrokeWidth(strokeWidth);
 
         paintOrange = new Paint();
-        paintOrange.setColor(getResources().getColor(R.color.aoyun_2));
+        paintOrange.setColor(getResources().getColor(R.color.aoyun_orange));
         paintOrange.setAntiAlias(true);
         paintOrange.setStyle(Paint.Style.STROKE);
         paintOrange.setStrokeWidth(strokeWidth);
 
         paintBlack = new Paint();
         paintBlack.setAntiAlias(true);
-        paintBlack.setColor(getResources().getColor(R.color.aoyun_3));
+        paintBlack.setColor(getResources().getColor(R.color.aoyun_black));
         paintBlack.setStyle(Paint.Style.STROKE);
         paintBlack.setStrokeWidth(strokeWidth);
 
         paintGreen = new Paint();
         paintGreen.setAntiAlias(true);
-        paintGreen.setColor(getResources().getColor(R.color.aoyun_4));
+        paintGreen.setColor(getResources().getColor(R.color.aoyun_green));
         paintGreen.setStyle(Paint.Style.STROKE);
         paintGreen.setStrokeWidth(strokeWidth);
 
         paintRed = new Paint();
         paintRed.setAntiAlias(true);
-        paintRed.setColor(getResources().getColor(R.color.aoyun_5));
+        paintRed.setColor(getResources().getColor(R.color.aoyun_red));
         paintRed.setStyle(Paint.Style.STROKE);
         paintRed.setStrokeWidth(strokeWidth);
     }

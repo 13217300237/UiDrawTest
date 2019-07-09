@@ -45,12 +45,12 @@ public class TestView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawColor(getResources().getColor(R.color.aoyun_2));
+        canvas.drawColor(getResources().getColor(R.color.aoyun_orange));
 
         Paint paint = new Paint();
 
 
-        paint.setColor(getResources().getColor(R.color.aoyun_4));
+        paint.setColor(getResources().getColor(R.color.aoyun_green));
         paint.setStyle(Paint.Style.FILL);
         paint.setTextAlign(Paint.Align.LEFT);
         paint.setTextSize(Utils.dp2px(50));

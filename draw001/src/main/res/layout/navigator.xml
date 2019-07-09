@@ -60,4 +60,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="图形绘制覆盖测试" />
+
+    <Button
+        android:id="@+id/btn8"
+        style="@style/textStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="自定义drawable" />
 </LinearLayout>

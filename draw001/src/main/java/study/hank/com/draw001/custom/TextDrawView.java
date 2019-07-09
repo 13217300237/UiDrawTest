@@ -37,13 +37,13 @@ public class TextDrawView extends View {
 
     private void initPaint() {
         mPaint = new Paint();
-        mPaint.setColor(getResources().getColor(R.color.aoyun_1));
+        mPaint.setColor(getResources().getColor(R.color.aoyun_blue));
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setTextSize(Utils.dp2px(30));
         mPaint.setTextAlign(Paint.Align.CENTER);
 
         mPaintHelper = new Paint();
-        mPaintHelper.setColor(getResources().getColor(R.color.aoyun_4));
+        mPaintHelper.setColor(getResources().getColor(R.color.aoyun_green));
         mPaintHelper.setStrokeWidth(Utils.dp2px(1));
         mPaintHelper.setStyle(Paint.Style.STROKE);
         mPaintHelper.setAntiAlias(true);

@@ -60,12 +60,12 @@ public class DrawOverlayDemoView extends View {
         mTopPaint = new Paint();
         mTopPaint.setAntiAlias(true);
         mTopPaint.setStyle(Paint.Style.FILL);
-        mTopPaint.setColor(getResources().getColor(R.color.aoyun_2));
+        mTopPaint.setColor(getResources().getColor(R.color.aoyun_orange));
 
         mBottomPaint = new Paint();
         mBottomPaint.setAntiAlias(true);
         mBottomPaint.setStyle(Paint.Style.FILL);
-        mBottomPaint.setColor(getResources().getColor(R.color.aoyun_4));
+        mBottomPaint.setColor(getResources().getColor(R.color.aoyun_green));
 
         mHeartRect = new RectF();
 
