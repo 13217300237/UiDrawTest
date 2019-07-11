@@ -5,14 +5,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import study.hank.com.draw001.R;
-import study.hank.com.draw001.activity.CustomDrawableActivity;
-import study.hank.com.draw001.activity.DrawTextActivity;
-import study.hank.com.draw001.activity.MatrixActivity;
-import study.hank.com.draw001.activity.OlympicRingsActivity;
-import study.hank.com.draw001.activity.OverlayDrawActivity;
-import study.hank.com.draw001.activity.RoundImageViewActivity;
-import study.hank.com.draw001.activity.ScrollViewInnerCustomViewActivity;
-import study.hank.com.draw001.activity.ShaderActivity;
+import study.hank.com.draw001.activity.children.CustomDrawableActivity;
+import study.hank.com.draw001.activity.children.DrawTextActivity;
+import study.hank.com.draw001.activity.children.MatrixActivity;
+import study.hank.com.draw001.activity.children.OlympicRingsActivity;
+import study.hank.com.draw001.activity.children.OverlayDrawActivity;
+import study.hank.com.draw001.activity.children.RoundImageViewActivity;
+import study.hank.com.draw001.activity.children.ScratchCardActivity;
+import study.hank.com.draw001.activity.children.ScrollViewInnerCustomViewActivity;
+import study.hank.com.draw001.activity.children.ShaderActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -58,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.btn8).setOnClickListener(v -> {
             Intent i = new Intent(MainActivity.this, CustomDrawableActivity.class);
+            startActivity(i);
+        });
+
+        findViewById(R.id.btn9).setOnClickListener(v -> {
+            Intent i = new Intent(MainActivity.this, ScratchCardActivity.class);
             startActivity(i);
         });
     }

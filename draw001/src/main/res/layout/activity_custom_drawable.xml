@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorC"
     android:padding="10dp"
-    tools:context=".activity.CustomDrawableActivity">
+    tools:context=".activity.children.CustomDrawableActivity">
 
     <ImageView
         android:id="@+id/iv"

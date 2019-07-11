@@ -1,4 +1,4 @@
-package study.hank.com.draw001.activity;
+package study.hank.com.draw001.activity.children;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

@@ -9,24 +9,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
+        <activity android:name=".activity.children.ScratchCardActivity"></activity>
         <activity
-            android:name=".activity.CustomDrawableActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".activity.OverlayDrawActivity"
+            android:name=".activity.children.CustomDrawableActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.MatrixActivity"
+            android:name=".activity.children.OverlayDrawActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.RoundImageViewActivity"
+            android:name=".activity.children.MatrixActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.ScrollViewInnerCustomViewActivity" />
         <activity
-            android:name=".activity.ShaderActivity"
+            android:name=".activity.children.RoundImageViewActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.children.ScrollViewInnerCustomViewActivity" />
+        <activity
+            android:name=".activity.children.ShaderActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".activity.DrawTextActivity" />
-        <activity android:name=".activity.OlympicRingsActivity" />
+        <activity android:name=".activity.children.DrawTextActivity" />
+        <activity android:name=".activity.children.OlympicRingsActivity" />
         <activity
             android:name=".activity.nav.MainActivity"
             android:screenOrientation="portrait">

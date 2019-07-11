@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorC"
-    tools:context=".activity.RoundImageViewActivity">
+    tools:context=".activity.children.RoundImageViewActivity">
 
     <study.hank.com.draw001.custom.RoundImageView
         android:id="@+id/img"

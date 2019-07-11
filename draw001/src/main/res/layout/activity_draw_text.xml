@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorF"
-    tools:context=".activity.DrawTextActivity">
+    tools:context=".activity.children.DrawTextActivity">
 
     <study.hank.com.draw001.custom.TextDrawView
         android:layout_width="match_parent"
