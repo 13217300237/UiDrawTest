@@ -136,24 +136,6 @@ public class MemoryClearDrawable extends Drawable {
         return mContext.getResources().getColor(resId);
     }
 
-    private void drawSupportLines(Canvas canvas) {
-        if (!showSupportLine) return;
-
-        canvas.drawLine(
-                -mWidth / 2,
-                0,
-                mWidth / 2,
-                0,
-                mSupportPaint);
-
-        canvas.drawLine(
-                0,
-                -mHeight / 2,
-                0,
-                mHeight / 2,
-                mSupportPaint2);
-    }
-
     private void drawBg(Canvas canvas) {
         int sideLength = Math.min(mWidth, mHeight);//方形边长
         RectF rectF = new RectF(-sideLength / 2, -sideLength / 2, sideLength / 2, sideLength / 2);
@@ -199,6 +181,24 @@ public class MemoryClearDrawable extends Drawable {
 
     private void drawPoint(Canvas canvas) {
         canvas.drawCircle(0, 0 - pointMoveFactor * upMovingLength, Utils.dp2px(5), mPointPaint);
+    }
+
+    private void drawSupportLines(Canvas canvas) {
+        if (!showSupportLine) return;
+
+        canvas.drawLine(
+                -mWidth / 2,
+                0,
+                mWidth / 2,
+                0,
+                mSupportPaint);
+
+        canvas.drawLine(
+                0,
+                -mHeight / 2,
+                0,
+                mHeight / 2,
+                mSupportPaint2);
     }
 
     public int mState = 0;//当前状态
@@ -365,7 +365,12 @@ public class MemoryClearDrawable extends Drawable {
             animatorSet = null;
         }
         animatorSet = new AnimatorSet();
-        animatorSet.playSequentially(cleaningAnimator, crossingAnimator, pointUpAnimator, pointDownAnimator, tickingAnimator);//次序执行
+        animatorSet.playSequentially(
+                cleaningAnimator,
+                crossingAnimator,
+                pointUpAnimator,
+                pointDownAnimator,
+                tickingAnimator);//次序执行
         animatorSet.start();
     }
 
