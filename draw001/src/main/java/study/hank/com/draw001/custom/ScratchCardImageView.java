@@ -15,9 +15,9 @@ import study.hank.com.draw001.R;
 import study.hank.com.draw001.Utils;
 
 /**
- * 刮刮卡案例，讲解XFermode的使用
+ * 刮刮卡案例，讲解 XFermode 的使用
  * <p>
- * 继承ImageView，原始图片的事情就不归我操心了，我只需要把握 挂挂的部分
+ * 继承ImageView，原始图片的事情就不归我操心了，我只需要把握 刮刮的部分
  */
 public class ScratchCardImageView extends AppCompatImageView {
 
@@ -27,7 +27,10 @@ public class ScratchCardImageView extends AppCompatImageView {
     private int cardColor;//刮刮卡原始涂层颜色
     private Bitmap mCoatBitmap;//涂层bitmap
 
-    private final float SHOW_ALL_PERCENT = 0.1f;
+    /**
+     * 展示全图的临界点
+     */
+    private final float SHOW_ALL_PERCENT = 0.5f;
     private int w, h;
 
     public ScratchCardImageView(Context context) {
@@ -63,7 +66,7 @@ public class ScratchCardImageView extends AppCompatImageView {
     }
 
     private boolean inited = false;//是否已经初始化
-    private Canvas mCoatCanvas;//图层canvas
+    private Canvas mCoatCanvas;//凃层canvas
 
 
     @Override
@@ -80,12 +83,18 @@ public class ScratchCardImageView extends AppCompatImageView {
         }
     }
 
+    /**
+     * 构建一个灰色图层Bitmap
+     * @param w
+     * @param h
+     * @return
+     */
     private Bitmap createCoatBitmap(int w, int h) {
-        Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_4444);
-        Canvas canvas = new Canvas(bitmap);
-        Paint paint = new Paint();
-        paint.setColor(cardColor);
-        paint.setAntiAlias(true);
+        Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_4444);//构建一个指定宽高的bitmap
+        Canvas canvas = new Canvas(bitmap);//新建一个画布
+        Paint paint = new Paint();//新建画笔
+        paint.setColor(cardColor);// 灰色
+        paint.setAntiAlias(true);// 抗锯齿
         canvas.drawRect(0, 0, w, h, paint);//这个draw动作，会改变bitmap的内容
         return bitmap;
     }
@@ -108,26 +117,20 @@ public class ScratchCardImageView extends AppCompatImageView {
             return;
 
         //看来drawBitmap有另外的图层保存方式
-        int layer = canvas.saveLayer(0, 0, getWidth(), getHeight(), mPaint, Canvas.ALL_SAVE_FLAG);//保存当前层
-
+        int layer = canvas.saveLayer(0, 0, getWidth(), getHeight(), mPaint, Canvas.ALL_SAVE_FLAG);//保存当前图层
         // 2 画涂层
         canvas.drawBitmap(mCoatBitmap, 0, 0, mPaint);//绘制位图只需要 l和t两个参数，已这个为左上角起点开始绘制，可能会越界
-
         // 3 画path
-        mPaint.setXfermode(xfermode);//设置模式
+        mPaint.setXfermode(xfermode);//先设置模式
         canvas.drawPath(mPath, mPaint);//再去画
-
         //  记得要把mCoatBitmap的状态保存一下
         mCoatCanvas.drawPath(mPath, mPaint);
-
         //记得清掉mode。。不然下一次 onDraw 会出事
         mPaint.setXfermode(null);
-
         canvas.restoreToCount(layer);// 回到指定图层
     }
 
     private float lastX, lastY;
-
 
     /**
      * 监控手势，改变mPath
@@ -137,6 +140,8 @@ public class ScratchCardImageView extends AppCompatImageView {
      */
     @Override
     public boolean onTouchEvent(MotionEvent e) {
+        if (ifShowAll)
+            return super.onTouchEvent(e);
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 lastX = e.getX();
@@ -153,13 +158,11 @@ public class ScratchCardImageView extends AppCompatImageView {
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                //手指抬起的时候，判定，是否需要展示全图
-                //处理最后一步，当刮过了一定面积之后，就自动展示全图
-                post(showAllRunnable);//利用post方法，发送一个runnable到消息队列中，这样可以避免和前面的handler消息发生冲突，按照队列去处理，很好
                 break;
             default:
                 break;
         }
+        post(showAllRunnable);//利用post方法，发送一个runnable到消息队列中，这样可以避免和前面的handler消息发生冲突，按照队列去处理，很好
         postInvalidate();
         return super.onTouchEvent(e);
         //  这里有个疑问.为什么这里不是true，我就收不到move事件，是不是ImageView特有的
@@ -191,7 +194,8 @@ public class ScratchCardImageView extends AppCompatImageView {
                 }
             }
 
-            float res = cleanedPx / totalPx;
+            float res = cleanedPx / totalPx;//计算一共滑过了百分之多少
+
             if (callback != null)
                 callback.scratch(res);
             if (res > SHOW_ALL_PERCENT) {//临界值0.2

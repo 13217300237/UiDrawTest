@@ -1,79 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:background="#ffffff">
 
-    <Button
-        android:id="@+id/btn1"
-        style="@style/textStyle"
+    <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="奥运五环" />
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn2"
-        style="@style/textStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="文字绘制居中" />
+        <Button
+            android:id="@+id/btn1"
+            style="@style/textStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="奥运五环" />
 
-    <Button
-        android:id="@+id/btn3"
-        style="@style/textStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="渐变画笔测试" />
+        <Button
+            android:id="@+id/btn2"
+            style="@style/textStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="文字绘制居中" />
 
-    <Button
-        android:id="@+id/btn4"
-        style="@style/textStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="scrollView内嵌一个自定义View的坑" />
+        <Button
+            android:id="@+id/btn3"
+            style="@style/textStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="渐变画笔测试" />
 
-    <Button
-        android:id="@+id/btn5"
-        style="@style/textStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="圆形头像" />
+        <Button
+            android:id="@+id/btn4"
+            style="@style/textStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="scrollView内嵌一个自定义View的坑" />
 
-    <Button
-        android:id="@+id/btn6"
-        style="@style/textStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="矩阵测试" />
+        <Button
+            android:id="@+id/btn5"
+            style="@style/textStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="圆形头像" />
 
-    <Button
-        android:id="@+id/btn7"
-        style="@style/textStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="图形绘制覆盖测试" />
+        <Button
+            android:id="@+id/btn6"
+            style="@style/textStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="矩阵测试" />
 
-    <Button
-        android:id="@+id/btn8"
-        style="@style/textStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="自定义drawable" />
+        <Button
+            android:id="@+id/btn7"
+            style="@style/textStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="图形绘制覆盖测试" />
 
-    <Button
-        android:id="@+id/btn9"
-        style="@style/textStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="刮刮卡 Xfermode的利用" />
-</LinearLayout>
+        <Button
+            android:id="@+id/btn8"
+            style="@style/textStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="自定义drawable" />
+
+        <Button
+            android:id="@+id/btn9"
+            style="@style/textStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="刮刮卡 Xfermode的利用" />
+    </LinearLayout>
+</ScrollView>
